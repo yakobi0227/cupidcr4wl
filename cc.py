@@ -10,6 +10,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 console = Console()
 
+__version__ = "2.1"
+
 ASCII_ART = r"""
           [bold cyan]_
       [bold magenta].-'` |___________________________//////
@@ -316,6 +318,13 @@ def parse_arguments():
         help="Prints all sites that cupidcr4wl will search by phone number."
     )
 
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"cupidcr4wl {__version__}",
+        help="Show the cupidcr4wl version number and exit."
+    )
+
     return parser.parse_args()
 
 
@@ -324,8 +333,8 @@ def parse_arguments():
 
 def main():
     """Main entry point for the script."""
-    display_ascii_art()  # Show ASCII art
     args = parse_arguments()  # Parse command-line arguments
+    display_ascii_art()  # Show ASCII art
 
     # Check if no arguments are provided
     if not (args.u or args.p or args.username_sites or args.phone_number_sites or args.export_results):
