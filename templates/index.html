@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cupidcr4wl Web</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <header class="header">
+            <h1>💘 cupidcr4wl Web 💘</h1>
+            <p class="tagline">Search supported platforms for usernames or phone numbers without leaving your browser.</p>
+        </header>
+
+        <section class="card">
+            <form method="post" class="search-form">
+                <label for="query" class="form-label">Usernames or phone numbers</label>
+                <textarea id="query" name="query" rows="3" placeholder="e.g. username1,username2" required>{{ query_text }}</textarea>
+
+                <div class="form-options">
+                    <div class="option-group">
+                        <span class="option-label">Search by</span>
+                        <label>
+                            <input type="radio" name="query_type" value="username" {% if query_type == 'username' %}checked{% endif %}>
+                            Username
+                        </label>
+                        <label>
+                            <input type="radio" name="query_type" value="phone" {% if query_type == 'phone' %}checked{% endif %}>
+                            Phone number
+                        </label>
+                    </div>
+                    <label class="debug-toggle">
+                        <input type="checkbox" name="debug" {% if debug %}checked{% endif %}>
+                        Include debug details
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn">Search</button>
+            </form>
+
+            {% if errors %}
+                <div class="alert alert-error">
+                    <h2>There was a problem</h2>
+                    <ul>
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </section>
+
+        {% if results %}
+            {% for result in results %}
+                <section class="card">
+                    <h2>Results for <span class="highlight">{{ result.target }}</span></h2>
+                    {% for category in result.categories %}
+                        <div class="category">
+                            <h3>{{ category.name }}</h3>
+                            <div class="sites">
+                                {% for site in category.sites %}
+                                    <article class="site {{ site.status }}">
+                                        <header class="site-header">
+                                            <h4>{{ site.name }}</h4>
+                                            <span class="status">{{ site.status.replace('_', ' ') }}</span>
+                                        </header>
+                                        {% if site.status in ['error', 'timeout', 'skipped'] %}
+                                            <p class="site-message muted">{{ site.message }}</p>
+                                        {% else %}
+                                            <p class="site-message">{{ site.message }}</p>
+                                        {% endif %}
+                                        {% if site.url %}
+                                            <p><a href="{{ site.url }}" target="_blank" rel="noopener">Visit profile</a></p>
+                                        {% endif %}
+                                        {% if debug and (site.matched_check_texts or site.matched_not_found_texts) %}
+                                            <details class="debug-details">
+                                                <summary>Debug details</summary>
+                                                {% if site.matched_check_texts %}
+                                                    <p><strong>Matched check text:</strong></p>
+                                                    <ul>
+                                                        {% for text in site.matched_check_texts %}
+                                                            <li>{{ text }}</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                {% endif %}
+                                                {% if site.matched_not_found_texts %}
+                                                    <p><strong>Matched not found text:</strong></p>
+                                                    <ul>
+                                                        {% for text in site.matched_not_found_texts %}
+                                                            <li>{{ text }}</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                {% endif %}
+                                            </details>
+                                        {% endif %}
+                                        {% if site.response_code %}
+                                            <p class="response-code">HTTP {{ site.response_code }}</p>
+                                        {% endif %}
+                                    </article>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </section>
+            {% endfor %}
+        {% elif results is not none %}
+            <section class="card">
+                <p>No results were produced for this search.</p>
+            </section>
+        {% endif %}
+    </main>
+</body>
+</html>
