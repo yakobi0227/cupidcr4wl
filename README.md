@@ -55,30 +55,32 @@ cupidcr4wl **will** search and return results for platforms that host content fo
 
 ```
 usage: cc.py [-h] [-p PHONENUMBER] [-u USERNAME] [--export-results] [--debug]
-             [--username-sites] [--phone-number-sites]
+            [--username-sites] [--phone-number-sites]
 
 A tool for checking if a username or phone number exists across various adult content
 platforms.
 
 options:
   -h, --help            show this help message and exit
-                        
+
   -p PHONENUMBER        Enter a phone number or multiple phone numbers (separated by commas)
                         to search.
-                        
+
   -u USERNAME           Enter a username or multiple usernames (separated by commas) to
                         search.
-                        
+
   --export-results      Search results will be exported to an HTML file named
                         'cc_results.html' in the current working directory.
-                        
+
   --debug               Debug mode shows all results, HTTP response codes,
                         check_text/not_found_text matches, timeouts, and errors for each
                         site checked.
-                        
+
   --username-sites      Prints all sites that cupidcr4wl will search by username.
-                        
+
   --phone-number-sites  Prints all sites that cupidcr4wl will search by phone number.
+
+  --version             Show the cupidcr4wl version number and exit.
 ```
 2) To perform a search of a username:
 
@@ -112,7 +114,11 @@ To perform a search of a phone number:
 
 &nbsp;&nbsp;&nbsp;&nbsp;```python3 cc.py --phone-number-sites```
 
-8) To run cupidcr4wl in debug mode to test for false positives/negatives and display timeouts/errors add the ```--debug``` argument:
+8) To display the current cupidcr4wl version number:
+
+&nbsp;&nbsp;&nbsp;&nbsp;```python3 cc.py --version```
+
+9) To run cupidcr4wl in debug mode to test for false positives/negatives and display timeouts/errors add the ```--debug``` argument:
 
 &nbsp;&nbsp;&nbsp;&nbsp;```python3 cc.py -u username --debug```
 
