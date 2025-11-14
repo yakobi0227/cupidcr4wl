@@ -21,7 +21,7 @@ The site list that cupidcr4wl utilizes for searching is updated for accuracy and
 
 cupidcr4wl **will** search and return results for platforms that host content for mature adult audiences. You are expected to use this tool in accordance with the laws and regulations in your respective jurisdiction(s). If while using cupidcr4wl you believe that you have discovered a platform hosting illegal content, you can utilize the [law enforcement reporting resources](https://github.com/OSINTI4L/cupidcr4wl/blob/main/.github/LEReportingResources.md) section to report it.
 
-## [Installation](#installation) | [Usage](#usage) | [Contributing](https://github.com/OSINTI4L/cupidcr4wl/blob/main/.github/CONTRIBUTING.md) | [Documentation](https://github.com/OSINTI4L/cupidcr4wl/wiki)
+## [Installation](#installation) | [Usage](#usage) | [Web App](#web-app) | [Contributing](https://github.com/OSINTI4L/cupidcr4wl/blob/main/.github/CONTRIBUTING.md) | [Documentation](https://github.com/OSINTI4L/cupidcr4wl/wiki)
 
 </div>
 
@@ -30,7 +30,9 @@ cupidcr4wl **will** search and return results for platforms that host content fo
 
   - ```requests```
 
-  - ```rich```
+ - ```rich```
+
+  - ```flask```
 
 ## Installation
 
@@ -123,3 +125,25 @@ To perform a search of a phone number:
 &nbsp;&nbsp;&nbsp;&nbsp;```python3 cc.py -u username --debug```
 
 &nbsp;&nbsp;&nbsp;&nbsp;(more can be read on this mode in the [documentation](https://github.com/OSINTI4L/cupidcr4wl/wiki/Usage-Options) section)
+
+## Web App
+
+cupidcr4wl now ships with an optional Flask web interface that mirrors the command line functionality in your browser.
+
+1. Install the additional dependency (if you have not already):
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. Start the development server:
+
+   ```bash
+   flask --app app run
+   ```
+
+   The server listens on port 5000 by default. You can also run `python app.py` if you prefer.
+
+3. Open your browser to [http://localhost:5000](http://localhost:5000) and search by username or phone number. Multiple values can be submitted by separating them with commas.
+
+> The web interface shares the same data files (`usernames.json`, `phonenumbers.json`, and `user_agents.txt`) as the CLI version, ensuring consistent search coverage across both experiences.
